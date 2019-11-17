@@ -1,4 +1,6 @@
-/data/
-/notebooks/.ipynb_checkpoints/
+data/processed/*
+data/raw/*
+logs/*
+notebooks/.ipynb_checkpoints/
 
 *.pyc
