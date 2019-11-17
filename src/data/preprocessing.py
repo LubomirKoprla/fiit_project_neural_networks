@@ -40,7 +40,7 @@ def preprocessing_pred(data_proc,
             print(processing_counter)
         user_pred = np.zeros(len(items_dic))
         for item in user_pred_items:
-            user_pred[items_dic[item]]
+            user_pred[items_dic[item]]=1
         data_y.append(user_pred)
         
     return data_y
