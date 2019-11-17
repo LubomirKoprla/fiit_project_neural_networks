@@ -8,7 +8,7 @@ def preprocessing(data,
                     item_col, 
                     verbose=0, 
                     min_items_user=5, 
-                    max_items_user=1000, 
+                    max_items_user=100, 
                     predicted_items=1, 
                     pad_maxlen=100, 
                     pad_padding='post'):
@@ -50,12 +50,12 @@ def preprocessing_seq(data,
                         item_col, 
                         verbose=0, 
                         min_items_user=5, 
-                        max_items_user=1000, 
+                        max_items_user=100, 
                         predicted_items=1):
     processing_counter = 0
     result_data = []
     user_items_inter = data.groupby([user_col])[item_col].nunique()
-    user_items_inter = user_items_inter[user_items_inter > 5]
+    user_items_inter = user_items_inter[user_items_inter > min_items_user and user_items_inter < max_items_user]
     data = data[data[user_col].isin(user_items_inter.index)]
     
     for user in data.visitorid.unique():
