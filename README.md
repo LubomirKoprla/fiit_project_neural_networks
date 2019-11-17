@@ -6,4 +6,6 @@ Autori:
 
 
 [Proposal](proposal.md)
+
+
 [Návrh modelu](model.png)
