@@ -34,6 +34,10 @@ Nako¾ko sa ukázalo, e kombináciou dlhodobıch a krátkodobıch preferencií je mon
 Monou architektúrou teda sú dve samostatné rekurentné siete (napr. LSTM). Prvá z nich má na vstupe všetky historické interakcie pouívate¾a s polokami a druhá zoh¾adòuje len poslednıch N akcií (blišie urèíme na základe analızy dát a konzultácií). Následne by sme porovnali vısledky dosiahnuté jednotlivımi sieami ako aj ich vhodnej kombinácie.
 
 
+## Návrh modelu
+
+![Návrh modelu](model.png)
+
 ## Zdroje
 
 [1] DEVOOGHT, Robin; BERSINI, Hugues. Collaborative filtering with recurrent neural networks. arXiv preprint arXiv:1608.07400, 2016.
