@@ -55,7 +55,7 @@ def preprocessing_seq(data,
     processing_counter = 0
     result_data = []
     user_items_inter = data.groupby([user_col])[item_col].nunique()
-    user_items_inter = user_items_inter[user_items_inter > min_items_user and user_items_inter < max_items_user]
+    user_items_inter = user_items_inter[(user_items_inter > min_items_user) & (user_items_inter < max_items_user)]
     data = data[data[user_col].isin(user_items_inter.index)]
     
     for user in data.visitorid.unique():
