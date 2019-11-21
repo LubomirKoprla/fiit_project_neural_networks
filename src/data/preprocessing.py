@@ -87,6 +87,12 @@ def preprocessing_seq(data,
     user_items_inter = user_items_inter[(user_items_inter >= min_items_user) & (user_items_inter <= max_items_user)]
     data = data[data[user_col].isin(user_items_inter.index)]
 
+
+    items_dic = {}
+    unique_items = np.sort(data[item_col].unique())
+    for counter, item in enumerate(unique_items,1):
+        items_dic[item] = counter
+
     for user in data.visitorid.unique():
         processing_counter += 1
         if verbose != 0 and processing_counter % 1000 == 0:
@@ -94,14 +100,22 @@ def preprocessing_seq(data,
 
         items = data[data[user_col] == user].groupby(item_col).timestamp.max().sort_values()
         if predicted_items >= 1:
-            seq = items[:predicted_items * (-1)].index.values
-            pred = items[predicted_items * (-1):].index.values
+            seq = []
+            for x in items[:predicted_items * (-1)].index.values:
+                seq.append(items_dic[x])
+            pred = []
+            for x in items[predicted_items * (-1):].index.values:
+                pred.append(items_dic[x])
         else:
             pred_items_count = int(len(items) * predicted_items)
             if pred_items_count < 1:
                 pred_items_count = 1
-            seq = items[:pred_items_count * (-1)].index.values
-            pred = items[pred_items_count * (-1):].index.values
+            seq = []
+            for x in items[:pred_items_count * (-1)].index.values:
+                seq.append(items_dic[x])
+            pred = []
+            for x in items[pred_items_count * (-1):].index.values:
+                pred.append(items_dic[x])
 
         result_data.append([user, seq, pred])
 
