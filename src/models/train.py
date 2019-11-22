@@ -1,24 +1,54 @@
 from argparse import ArgumentParser
-
-# import os
-# from src.models.model import LSTMrecommender
-import yaml
 import numpy as np
+import yaml
+from keras.optimizers import Adam
+
+from src.models.model import LSTMRec
 
 
-def train_and_validate(train_x, train_y, test_x, test_y, model=None):
+
+
+def train_and_validate(train_x, train_y, test_x, test_y, hparams):
+    unique_items = len(train_y[0])
+    model = LSTMRec(
+        vocabulary_size=unique_items,
+        emb_output_dim=hparams['emb_dim'],
+        lstm_units=hparams['lstm_units'],
+        lstm_activation=hparams['lstm_activation'],
+        lstm_recurrent_activation=hparams['lstm_recurrent_activation'],
+        lstm_dropout=hparams['lstm_dropout'],
+        lstm_recurrent_dropout=hparams['lstm_recurrent_dropout'],
+        dense_activation=hparams['dense_activation']
+    )
     model.compile(
-        optimizer='adam',
-        loss='sparse_categorical_crossentropy',
-        metrics=['accuracy'])
+        optimizer=Adam(
+            learning_rate=hparams['learning_rate'],
+            beta_1=hparams['adam_beta_1'],
+            beta_2=hparams['adam_beta_2'],
+            epsilon=hparams['adam_epsilon']
+        ),
+        loss='binary_crossentropy',
+        metrics=[
+            keras.metrics.Precision(top_k=5)
+        ]
+    )
+
+    callbacks = [
+        keras.callbacks.TensorBoard(
+            log_dir=os.path.join('..\logs', 'v2_binary_cross'),
+            histogram_freq=1,
+            profile_batch=0
+        )
+    ]
 
     model.fit(
         x=train_x,
         y=train_y,
-        batch_size=10,
-        epochs=30,
-        validation_data=(test_x, test_y))
-
+        batch_size=256,
+        epochs=100,
+        validation_data=(test_x, test_y),
+        callbacks=callbacks
+    )
 
 def main():
     parser = ArgumentParser(
@@ -66,7 +96,8 @@ def main():
         if args.lstm_recurrent_activation is not None:
             hparams['lstm_recurrent_activation'] = args.lstm_recurrent_activation
         else:
-            hparams['lstm_recurrent_activation'] = ['relu', 'sigmoid', 'tanh', 'linear', 'softmax'][np.random.randint(0, 5)]
+            hparams['lstm_recurrent_activation'] = ['relu', 'sigmoid', 'tanh', 'linear', 'softmax'][
+                np.random.randint(0, 5)]
 
         if args.lstm_dropout is not None:
             hparams['lstm_dropout'] = args.lstm_dropout
@@ -108,13 +139,6 @@ def main():
         else:
             hparams['adam_epsilon'] = 10 ** (-np.random.randint(6, 11))
 
-
-if __name__ == "__main__" and __package__ is None:
-    from sys import path
-    from os.path import dirname as dir
-
-    path.append(dir(path[0]))
-    __package__ = "examples"
 
 if __name__ == "__main__":
     main()
