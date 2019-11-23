@@ -1,11 +1,11 @@
-# Odpor˙Ëanie produktov v elektronickom obchode
+# Odpor√∫ƒçanie produktov v elektronickom obchode
 
 Autori:
- - Patrik Blan·rik
- - LubomÌr Koprla
+ - Patrik Blan√°rik
+ - Lubom√≠r Koprla
 
 
 [Proposal](proposal.md)
 
 
-[N·vrh modelu](model.png)
+[N√°vrh modelu](model.png)
