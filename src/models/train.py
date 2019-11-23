@@ -1,11 +1,19 @@
 from argparse import ArgumentParser
 import numpy as np
 import yaml
+import os
+from datetime import datetime
 from keras.optimizers import Adam
+from keras.metrics import Precision, Recall
+from keras.callbacks import EarlyStopping, ModelCheckpoint, TensorBoard
+import tensorflow as tf
+from tensorboard.plugins.hparams import api as hp
+import sys
+sys.path.insert(0, '../../')
 
 from src.models.model import LSTMRec
-
-
+import src.data.load_data_yoochoose as data
+import src.data.preprocessing as prep
 
 
 def train_and_validate(train_x, train_y, test_x, test_y, hparams):
@@ -29,26 +37,65 @@ def train_and_validate(train_x, train_y, test_x, test_y, hparams):
         ),
         loss='binary_crossentropy',
         metrics=[
-            keras.metrics.Precision(top_k=5)
+            Precision(top_k=1, name='P_at_1'),
+            Precision(top_k=3, name='P_at_3'),
+            Precision(top_k=5, name='P_at_5'),
+            Precision(top_k=10, name='P_at_10'),
+            Recall(top_k=10, name='R_at_10'),
+            Recall(top_k=50, name='R_at_50'),
+            Recall(top_k=100, name='R_at_100')
         ]
     )
-
-    callbacks = [
-        keras.callbacks.TensorBoard(
-            log_dir=os.path.join('..\logs', 'v2_binary_cross'),
-            histogram_freq=1,
-            profile_batch=0
-        )
-    ]
-
-    model.fit(
+    hst = model.fit(
         x=train_x,
         y=train_y,
-        batch_size=256,
-        epochs=100,
-        validation_data=(test_x, test_y),
-        callbacks=callbacks
+        batch_size=hparams['batch_size'],
+        epochs=1000,
+        callbacks=[
+            EarlyStopping(
+                monitor='val_R_at_10',
+                patience=10,
+                mode='max',
+                restore_best_weights=True,
+                verbose=True
+            ),
+            ModelCheckpoint(
+                filepath=os.path.join(os.pardir, os.pardir, 'models', hparams['run_id'] + '.ckpt'),
+                monitor='val_R_at_10',
+                mode='max',
+                save_best_only=True,
+                save_weights_only=True,
+                verbose=True
+            ),
+            TensorBoard(
+                log_dir=os.path.join(os.pardir, os.pardir, 'logs', hparams['run_id']),
+                histogram_freq=1
+            )
+        ],
+        validation_split=0.2
     )
+    val_best_epoch = np.argmax(hst.history['val_R_at_10'])
+    test_results = model.evaluate(test_x, test_y)
+    with tf.summary.create_file_writer(os.path.join(os.pardir, os.pardir, 'logs', hparams['run_id'], 'hparams')).as_default():
+        hp.hparams(hparams)
+        tf.summary.scalar('train.final_loss', hst.history["val_loss"][val_best_epoch], step=val_best_epoch)
+        tf.summary.scalar('train.final_P_at_1', hst.history["val_P_at_1"][val_best_epoch], step=val_best_epoch)
+        tf.summary.scalar('train.final_P_at_3', hst.history["val_P_at_3"][val_best_epoch], step=val_best_epoch)
+        tf.summary.scalar('train.final_P_at_5', hst.history["val_P_at_5"][val_best_epoch], step=val_best_epoch)
+        tf.summary.scalar('train.final_P_at_10', hst.history["val_P_at_10"][val_best_epoch], step=val_best_epoch)
+        tf.summary.scalar('train.final_R_at_10', hst.history["val_R_at_10"][val_best_epoch], step=val_best_epoch)
+        tf.summary.scalar('train.final_R_at_50', hst.history["val_R_at_50"][val_best_epoch], step=val_best_epoch)
+        tf.summary.scalar('train.final_R_at_100', hst.history["val_R_at_100"][val_best_epoch], step=val_best_epoch)
+
+        tf.summary.scalar('test.final_loss', test_results[0], step=val_best_epoch)
+        tf.summary.scalar('test.final_P_at_1', test_results[1], step=val_best_epoch)
+        tf.summary.scalar('test.final_P_at_3', test_results[2], step=val_best_epoch)
+        tf.summary.scalar('test.final_P_at_5', test_results[3], step=val_best_epoch)
+        tf.summary.scalar('test.final_P_at_10', test_results[4], step=val_best_epoch)
+        tf.summary.scalar('test.final_R_at_10', test_results[5], step=val_best_epoch)
+        tf.summary.scalar('test.final_R_at_50', test_results[6], step=val_best_epoch)
+        tf.summary.scalar('test.final_R_at_100', test_results[7], step=val_best_epoch)
+
 
 def main():
     parser = ArgumentParser(
@@ -139,6 +186,14 @@ def main():
         else:
             hparams['adam_epsilon'] = 10 ** (-np.random.randint(6, 11))
 
+    hparams['run_id'] = datetime.now().strftime("%Y-%m-%d__%H-%M-%S")
+
+    data_x, data_y = data.load_processed_sparse()
+    data_y = data_y.toarray()
+    data_x = data_x
+    data_y = data_y
+    train_x, test_x, train_y, test_y = prep.data_split(data_x, data_y)
+    train_and_validate(train_x, train_y, test_x, test_y, hparams)
 
 if __name__ == "__main__":
     main()
