@@ -1,5 +1,6 @@
-data/processed/*
-data/raw/*
+*.npz
+*.csv
+*.zip
 logs/*
 notebooks/.ipynb_checkpoints/
 *.ckpt
