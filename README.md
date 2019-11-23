@@ -1,4 +1,4 @@
-# Odporúcanie produktov v elektronickom obchode
+# Odporúèanie produktov v elektronickom obchode
 
 Autori:
  - Patrik Blanárik
