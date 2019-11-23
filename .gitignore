@@ -2,6 +2,6 @@ data/processed/*
 data/raw/*
 logs/*
 notebooks/.ipynb_checkpoints/
-
+.ckpt
 *.pyc
 .idea/*
