@@ -12,19 +12,22 @@ def load_test():
     return pd.read_csv("../data/raw/yoochoose-csv/yoochoose-test.csv",names=["visitorid","timestamp","itemid","category"])
 
 def save_processed(data_x,data_y):
-    np.savetxt("../data/processed/yoochoose/data_x.csv", np.asarray(data_x), delimiter=",")
-    np.savetxt("../data/processed/yoochoose/data_y.csv", np.asarray(data_y), delimiter=",")
+    np.savetxt("../data/processed/yoochoose/dataset_v1/data_x.csv", np.asarray(data_x), delimiter=",")
+    np.savetxt("../data/processed/yoochoose/dataset_v1/data_y.csv", np.asarray(data_y), delimiter=",")
 
 def load_processed():
-    data_x = np.genfromtxt("../data/processed/yoochoose/data_x.csv",delimiter=",")
-    data_y = np.genfromtxt("../data/processed/yoochoose/data_y.csv", delimiter=",")
+    data_x = np.genfromtxt("../data/processed/yoochoose/dataset_v1/data_x.csv",delimiter=",")
+    data_y = np.genfromtxt("../data/processed/yoochoose/dataset_v1/data_y.csv", delimiter=",")
     return data_x,data_y
 
 def save_processed_sparse(data_x,data_y):
-    np.savetxt("../data/processed/yoochoose/data_x.csv", np.asarray(data_x), delimiter=",")
-    scipy.sparse.save_npz('../data/processed/yoochoose/data_y.npz', data_y)
+    np.savetxt("../data/processed/yoochoose/dataset_v1_sparse/data_x.csv", np.asarray(data_x), delimiter=",")
+    scipy.sparse.save_npz('../data/processed/yoochoose/dataset_v1_sparse/data_y.npz', data_y)
 
 def load_processed_sparse():
-    data_x = np.genfromtxt("../data/processed/yoochoose/data_x.csv",delimiter=",")
-    data_y = scipy.sparse.load_npz("../data/processed/yoochoose/data_y.npz")
+    data_x = np.genfromtxt("../data/processed/yoochoose/dataset_v1_sparse/data_x.csv",delimiter=",")
+    data_y = scipy.sparse.load_npz("../data/processed/yoochoose/dataset_v1_sparse/data_y.npz")
     return data_x,data_y
+
+def transform_sparse_to_array(data_y):
+    return data_y.toarray()
