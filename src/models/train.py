@@ -144,8 +144,6 @@ def main():
     for i in range(iterations):
         start = time()
         try:
-            if i%2 == 0:
-                4/0
             if args.default:
                 with open('hparams.yaml') as f_hparams:
                     hparams = yaml.safe_load(f_hparams)
