@@ -14,7 +14,9 @@ sys.path.insert(0, '../../')
 from src.models.model import LSTMRec
 import src.data.load_data_yoochoose as data
 import src.data.preprocessing as prep
+import src.utils.notifier as notifier
 
+hparams = {}
 
 def train_and_validate(train_x, train_y, test_x, test_y, hparams):
     unique_items = len(train_y[0])
@@ -98,6 +100,7 @@ def train_and_validate(train_x, train_y, test_x, test_y, hparams):
 
 
 def main():
+    global hparams
     parser = ArgumentParser(
         description='Script fits LSTMRec on train data. Hyperparameters can be defined as arguments.'
                     'Unspecified hyperparameters will be generated randomly.'
@@ -119,7 +122,6 @@ def main():
     parser.add_argument('--adam-epsilon', type=float, help='Epsilon parameter of Adam optimizer')
     parser.add_argument('--take', type=int, help='Debugging: how many samples to use')
     args = parser.parse_args()
-    hparams = {}
 
     if args.default:
         with open('hparams.yaml') as f_hparams:
@@ -190,7 +192,6 @@ def main():
     hparams['run_id'] = datetime.now().strftime("%Y-%m-%d__%H-%M-%S")
 
     data_x, data_y = data.load_processed_sparse()
-
     if args.take is not None:
         data_x = data_x[:args.take]
         data_y = data_y[:args.take]
@@ -200,5 +201,11 @@ def main():
     train_x, test_x, train_y, test_y = prep.data_split(data_x, data_y)
     train_and_validate(train_x, train_y, test_x, test_y, hparams)
 
+
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:
+        notifier.slack_message(e, hparams)
+
+
