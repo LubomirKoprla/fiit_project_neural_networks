@@ -1,0 +1,3 @@
+sudo docker build -t tf-project  ~/fiit_project_neural_networks/Docker/
+
+sudo docker run --gpus all -v /home/koprl/fiit_project_neural_networks/:/home/koprl/fiit_project_neural_networks -it tf-project
