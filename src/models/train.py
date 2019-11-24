@@ -117,6 +117,7 @@ def main():
     parser.add_argument('--adam-beta-1', type=float, help='Beta 1 parameter of Adam optimizer')
     parser.add_argument('--adam-beta-2', type=float, help='Beta 2 parameter of Adam optimizer')
     parser.add_argument('--adam-epsilon', type=float, help='Epsilon parameter of Adam optimizer')
+    parser.add_argument('--take', type=int, help='Debugging: how many samples to use')
     args = parser.parse_args()
     hparams = {}
 
@@ -189,9 +190,13 @@ def main():
     hparams['run_id'] = datetime.now().strftime("%Y-%m-%d__%H-%M-%S")
 
     data_x, data_y = data.load_processed_sparse()
+
+    if args.take is not None:
+        data_x = data_x[:args.take]
+        data_y = data_y[:args.take]
     data_y = data_y.toarray()
-    data_x = data_x
-    data_y = data_y
+    print(data_x.shape)
+    print(data_y.shape)
     train_x, test_x, train_y, test_y = prep.data_split(data_x, data_y)
     train_and_validate(train_x, train_y, test_x, test_y, hparams)
 
