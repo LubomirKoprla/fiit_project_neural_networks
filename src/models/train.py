@@ -107,43 +107,41 @@ def train_and_validate(train_x, train_y, test_x, test_y, hparams):
 
 def main():
     global hparams
-    parser = ArgumentParser(
-        description='Script fits LSTMRec on train data. Hyperparameters can be defined as arguments.'
-                    'Unspecified hyperparameters will be generated randomly.'
-                    'Use -d to force default hyperparameters to be used.')
-    parser.add_argument('-d', '--default', help='Forces the use of default hyperparameters', action="store_true")
-    parser.add_argument('--emb-dim', type=int, help='Length of item embedding')
-    parser.add_argument('--lstm-units', type=int, help='Count of LSTM units')
-    parser.add_argument('--lstm-activation', type=str, help='LSTM activation function')
-    parser.add_argument('--lstm-recurrent-activation', type=str, help='Activation function of recurrent units')
-    parser.add_argument('--lstm-dropout', type=float,
-                        help='Fraction of the units to drop for the linear transformation of the LSTM inputs')
-    parser.add_argument('--lstm-recurrent-dropout', type=float,
-                        help='Fraction of the units to drop for the linear transformation of the recurrent state')
-    parser.add_argument('--dense-activation', type=str, help='Dense layer activation function')
-    parser.add_argument('--batch-size', type=int, help='Batch size')
-    parser.add_argument('--learning-rate', type=float, help='Learning rate of Adam optimizer')
-    parser.add_argument('--adam-beta-1', type=float, help='Beta 1 parameter of Adam optimizer')
-    parser.add_argument('--adam-beta-2', type=float, help='Beta 2 parameter of Adam optimizer')
-    parser.add_argument('--adam-epsilon', type=float, help='Epsilon parameter of Adam optimizer')
-    parser.add_argument('--take', type=int, help='Debugging: how many samples to use')
-    parser.add_argument('--iteration', type=int, help='What id should this run have')
-    args = parser.parse_args()
-
-    # prepare data once
-    data_x, data_y = data.load_processed_sparse()
-    if args.take is not None:
-        data_x = data_x[:args.take]
-        data_y = data_y[:args.take]
-    data_y = data_y.toarray()
-
-    iteration = 0
-    if args.iteration is not None:
-        iteration = args.iteration
-
-    #for i in range(iterations):
-    start = time()
     try:
+        start = time()
+        parser = ArgumentParser(
+            description='Script fits LSTMRec on train data. Hyperparameters can be defined as arguments.'
+                        'Unspecified hyperparameters will be generated randomly.'
+                        'Use -d to force default hyperparameters to be used.')
+        parser.add_argument('-d', '--default', help='Forces the use of default hyperparameters', action="store_true")
+        parser.add_argument('--emb-dim', type=int, help='Length of item embedding')
+        parser.add_argument('--lstm-units', type=int, help='Count of LSTM units')
+        parser.add_argument('--lstm-activation', type=str, help='LSTM activation function')
+        parser.add_argument('--lstm-recurrent-activation', type=str, help='Activation function of recurrent units')
+        parser.add_argument('--lstm-dropout', type=float,
+                            help='Fraction of the units to drop for the linear transformation of the LSTM inputs')
+        parser.add_argument('--lstm-recurrent-dropout', type=float,
+                            help='Fraction of the units to drop for the linear transformation of the recurrent state')
+        parser.add_argument('--dense-activation', type=str, help='Dense layer activation function')
+        parser.add_argument('--batch-size', type=int, help='Batch size')
+        parser.add_argument('--learning-rate', type=float, help='Learning rate of Adam optimizer')
+        parser.add_argument('--adam-beta-1', type=float, help='Beta 1 parameter of Adam optimizer')
+        parser.add_argument('--adam-beta-2', type=float, help='Beta 2 parameter of Adam optimizer')
+        parser.add_argument('--adam-epsilon', type=float, help='Epsilon parameter of Adam optimizer')
+        parser.add_argument('--take', type=int, help='Debugging: how many samples to use')
+        parser.add_argument('--iteration', type=int, help='What id should this run have')
+        args = parser.parse_args()
+
+        data_x, data_y = data.load_processed_sparse()
+        if args.take is not None:
+            data_x = data_x[:args.take]
+            data_y = data_y[:args.take]
+        data_y = data_y.toarray()
+
+        iteration = 0
+        if args.iteration is not None:
+            iteration = args.iteration
+
         if args.default:
             with open('hparams.yaml') as f_hparams:
                 hparams = yaml.safe_load(f_hparams)
@@ -227,8 +225,6 @@ def main():
         notifier.slack_info_message(iteration, start, results, hparams)
     except Exception as e:
         notifier.slack_error_message(iteration, start, e, hparams)
-
-        # hparams={}
 
 
 if __name__ == "__main__":
