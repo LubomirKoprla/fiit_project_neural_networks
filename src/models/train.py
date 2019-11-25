@@ -55,7 +55,7 @@ def train_and_validate(train_x, train_y, test_x, test_y, hparams):
         x=train_x,
         y=train_y,
         batch_size=hparams['batch_size'],
-        epochs=1,
+        epochs=250,
         callbacks=[
             EarlyStopping(
                 monitor='val_R_at_10',
