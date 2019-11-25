@@ -185,7 +185,7 @@ def main():
             if args.batch_size is not None:
                 hparams['batch_size'] = args.batch_size
             else:
-                hparams['batch_size'] = 2 ** (np.random.randint(3, 11))
+                hparams['batch_size'] = 2 ** (np.random.randint(3, 10))
 
             if args.learning_rate is not None:
                 hparams['learning_rate'] = args.learning_rate
@@ -195,12 +195,12 @@ def main():
             if args.adam_beta_1 is not None:
                 hparams['adam_beta_1'] = args.adam_beta_1
             else:
-                hparams['adam_beta_1'] = 0.05 * (np.random.randint(14, 25))
+                hparams['adam_beta_1'] = 0.025 * (np.random.randint(30, 40))
 
             if args.adam_beta_2 is not None:
                 hparams['adam_beta_2'] = args.adam_beta_2
             else:
-                hparams['adam_beta_2'] = 0.05 * (np.random.randint(14, 25)) - 0.001
+                hparams['adam_beta_2'] = 0.025 * (np.random.randint(30, 41)) - 0.001
 
             if args.adam_epsilon is not None:
                 hparams['adam_epsilon'] = args.adam_epsilon
