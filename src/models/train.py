@@ -55,7 +55,7 @@ def train_and_validate(train_x, train_y, test_x, test_y, hparams):
         x=train_x,
         y=train_y,
         batch_size=hparams['batch_size'],
-        epochs=250,
+        epochs=1,
         callbacks=[
             EarlyStopping(
                 monitor='val_R_at_10',
@@ -127,7 +127,7 @@ def main():
     parser.add_argument('--adam-beta-2', type=float, help='Beta 2 parameter of Adam optimizer')
     parser.add_argument('--adam-epsilon', type=float, help='Epsilon parameter of Adam optimizer')
     parser.add_argument('--take', type=int, help='Debugging: how many samples to use')
-    parser.add_argument('--iterations', type=int, help='How many iterations should be run (use to find optimal hyperparameters)')
+    parser.add_argument('--iteration', type=int, help='What id should this run have')
     args = parser.parse_args()
 
     # prepare data once
@@ -137,98 +137,98 @@ def main():
         data_y = data_y[:args.take]
     data_y = data_y.toarray()
 
-    iterations = 1
-    if args.iterations is not None:
-        iterations = args.iterations
+    iteration = 0
+    if args.iteration is not None:
+        iteration = args.iteration
 
-    for i in range(iterations):
-        start = time()
-        try:
-            if args.default:
-                with open('hparams.yaml') as f_hparams:
-                    hparams = yaml.safe_load(f_hparams)
+    #for i in range(iterations):
+    start = time()
+    try:
+        if args.default:
+            with open('hparams.yaml') as f_hparams:
+                hparams = yaml.safe_load(f_hparams)
+        else:
+            if args.emb_dim is not None:
+                hparams['emb_dim'] = args.emb_dim
             else:
-                if args.emb_dim is not None:
-                    hparams['emb_dim'] = args.emb_dim
-                else:
-                    hparams['emb_dim'] = 50 * np.random.randint(1, 11)
+                hparams['emb_dim'] = 50 * np.random.randint(1, 11)
 
-                if args.lstm_units is not None:
-                    hparams['lstm_units'] = args.lstm_units
-                else:
-                    hparams['lstm_units'] = 25 * np.random.randint(1, 13)
+            if args.lstm_units is not None:
+                hparams['lstm_units'] = args.lstm_units
+            else:
+                hparams['lstm_units'] = 25 * np.random.randint(1, 13)
 
-                if args.lstm_activation is not None:
-                    hparams['lstm_activation'] = args.lstm_activation
-                else:
-                    hparams['lstm_activation'] = ['relu', 'sigmoid', 'tanh', 'linear', 'softmax'][np.random.randint(0, 5)]
+            if args.lstm_activation is not None:
+                hparams['lstm_activation'] = args.lstm_activation
+            else:
+                hparams['lstm_activation'] = ['relu', 'sigmoid', 'tanh', 'linear', 'softmax'][np.random.randint(0, 5)]
 
-                if args.lstm_recurrent_activation is not None:
-                    hparams['lstm_recurrent_activation'] = args.lstm_recurrent_activation
-                else:
-                    hparams['lstm_recurrent_activation'] = ['relu', 'sigmoid', 'tanh', 'linear', 'softmax'][
-                        np.random.randint(0, 5)]
+            if args.lstm_recurrent_activation is not None:
+                hparams['lstm_recurrent_activation'] = args.lstm_recurrent_activation
+            else:
+                hparams['lstm_recurrent_activation'] = ['relu', 'sigmoid', 'tanh', 'linear', 'softmax'][
+                    np.random.randint(0, 5)]
 
-                if args.lstm_dropout is not None:
-                    hparams['lstm_dropout'] = args.lstm_dropout
-                else:
-                    hparams['lstm_dropout'] = 0.05 * np.random.randint(1, 11)
+            if args.lstm_dropout is not None:
+                hparams['lstm_dropout'] = args.lstm_dropout
+            else:
+                hparams['lstm_dropout'] = 0.05 * np.random.randint(1, 11)
 
-                if args.lstm_recurrent_dropout is not None:
-                    hparams['lstm_recurrent_dropout'] = args.lstm_recurrent_dropout
-                else:
-                    hparams['lstm_recurrent_dropout'] = 0.05 * np.random.randint(1, 11)
+            if args.lstm_recurrent_dropout is not None:
+                hparams['lstm_recurrent_dropout'] = args.lstm_recurrent_dropout
+            else:
+                hparams['lstm_recurrent_dropout'] = 0.05 * np.random.randint(1, 11)
 
-                if args.dense_activation is not None:
-                    hparams['dense_activation'] = args.dense_activation
-                else:
-                    hparams['dense_activation'] = ['relu', 'sigmoid', 'tanh', 'linear', 'softmax'][np.random.randint(0, 5)]
+            if args.dense_activation is not None:
+                hparams['dense_activation'] = args.dense_activation
+            else:
+                hparams['dense_activation'] = ['relu', 'sigmoid', 'tanh', 'linear', 'softmax'][np.random.randint(0, 5)]
 
-                if args.batch_size is not None:
-                    hparams['batch_size'] = args.batch_size
-                else:
-                    hparams['batch_size'] = 2 ** (np.random.randint(3, 11))
+            if args.batch_size is not None:
+                hparams['batch_size'] = args.batch_size
+            else:
+                hparams['batch_size'] = 2 ** (np.random.randint(3, 11))
 
-                if args.learning_rate is not None:
-                    hparams['learning_rate'] = args.learning_rate
-                else:
-                    hparams['learning_rate'] = 10 ** (-np.random.randint(2, 5))
+            if args.learning_rate is not None:
+                hparams['learning_rate'] = args.learning_rate
+            else:
+                hparams['learning_rate'] = 10 ** (-np.random.randint(2, 5))
 
-                if args.adam_beta_1 is not None:
-                    hparams['adam_beta_1'] = args.adam_beta_1
-                else:
-                    hparams['adam_beta_1'] = 0.05 * (np.random.randint(14, 25))
+            if args.adam_beta_1 is not None:
+                hparams['adam_beta_1'] = args.adam_beta_1
+            else:
+                hparams['adam_beta_1'] = 0.05 * (np.random.randint(14, 25))
 
-                if args.adam_beta_2 is not None:
-                    hparams['adam_beta_2'] = args.adam_beta_2
-                else:
-                    hparams['adam_beta_2'] = 0.05 * (np.random.randint(14, 25)) - 0.001
+            if args.adam_beta_2 is not None:
+                hparams['adam_beta_2'] = args.adam_beta_2
+            else:
+                hparams['adam_beta_2'] = 0.05 * (np.random.randint(14, 25)) - 0.001
 
-                if args.adam_epsilon is not None:
-                    hparams['adam_epsilon'] = args.adam_epsilon
-                else:
-                    hparams['adam_epsilon'] = 10 ** (-np.random.randint(6, 11))
+            if args.adam_epsilon is not None:
+                hparams['adam_epsilon'] = args.adam_epsilon
+            else:
+                hparams['adam_epsilon'] = 10 ** (-np.random.randint(6, 11))
 
-            hparams['run_id'] = datetime.now().strftime("%Y-%m-%d__%H-%M-%S")
+        hparams['run_id'] = datetime.now().strftime("%Y-%m-%d__%H-%M-%S")
 
-            train_x, test_x, train_y, test_y = prep.data_split(data_x, data_y)
-            epoch, results = train_and_validate(train_x, train_y, test_x, test_y, hparams)
-            results = {
-                'last_epoch': epoch,
-                'loss': results[0],
-                'P@1': results[1],
-                'P@3': results[2],
-                'P@5': results[3],
-                'P@10': results[4],
-                'R@10': results[5],
-                'R@50': results[6],
-                'R@100': results[7]
-            }
-            notifier.slack_info_message(i, start, results, hparams)
-        except Exception as e:
-            notifier.slack_error_message(i, start, e, hparams)
+        train_x, test_x, train_y, test_y = prep.data_split(data_x, data_y)
+        epoch, results = train_and_validate(train_x, train_y, test_x, test_y, hparams)
+        results = {
+            'last_epoch': epoch,
+            'loss': results[0],
+            'P@1': results[1],
+            'P@3': results[2],
+            'P@5': results[3],
+            'P@10': results[4],
+            'R@10': results[5],
+            'R@50': results[6],
+            'R@100': results[7]
+        }
+        notifier.slack_info_message(iteration, start, results, hparams)
+    except Exception as e:
+        notifier.slack_error_message(iteration, start, e, hparams)
 
-        hparams={}
+        # hparams={}
 
 
 if __name__ == "__main__":
