@@ -28,6 +28,12 @@ class LSTMRec(Model):
             activation=dense_activation
         )
 
+        # https://stackoverflow.com/questions/39854390/nan-in-summary-histogram
+        # https://stackoverflow.com/questions/53080289/keras-nan-in-summary-histogram-lstm
+        # self.emb.add_loss(10.0)
+        # self.lstm.add_loss(10.0)
+        # self.dense.add_loss(10.0)
+
     def call(self, x):
         mask = self.emb.compute_mask(x)
         x = self.emb(x)

@@ -6,3 +6,4 @@ notebooks/.ipynb_checkpoints/
 *.ckpt
 *.pyc
 .idea/*
+*.tkn
