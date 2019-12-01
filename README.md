@@ -2,7 +2,7 @@
 
 Autori:
  - Patrik Blanárik
- - Lubomír Koprla
+ - Ľubomír Koprla
 
 
 [Proposal](proposal.md)
