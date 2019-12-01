@@ -1,42 +1,111 @@
-# Odpor˙Ëanie produktov v elektronickom obchode
+# Odpor√∫ƒçanie produktov v elektronickom obchode
 
-Elektronick˝ obchod sa stal neoddeliteænou s˙Ëasùou ûivota takmer kaûdÈho z n·s. V takomto obchode si moûno dnes beûne k˙più tisÌce rÙznych produktov. Ned· sa teda oËak·vaù, ûe pouûÌvateæ bude prech·dzaù vöetky produkty aû k˝m nen·jde ten spr·vny. Je tieû dok·zanÈ, ûe keÔ pouûÌvateæ do istÈho okamihu na webovom sÌdle neobjavÌ relevantnÈ inform·cie, odÌde. V prÌpade elektronickÈho obchodu moûno de facto hovoriù o strate z·kaznÌka, ktor˝ si produkt k˙pi u konkurencie.
+Elektronick√Ω obchod sa stal neoddeliteƒænou s√∫ƒças≈•ou ≈æivota takmer ka≈æd√©ho z n√°s. V takomto obchode si mo≈æno dnes be≈æne k√∫pi≈• tis√≠ce r√¥znych produktov. Ned√° sa teda oƒçak√°va≈•, ≈æe pou≈æ√≠vateƒæ bude prech√°dza≈• v≈°etky produkty a≈æ k√Ωm nen√°jde ten spr√°vny. Je tie≈æ dok√°zan√©, ≈æe keƒè pou≈æ√≠vateƒæ do ist√©ho okamihu na webovom s√≠dle neobjav√≠ relevantn√© inform√°cie, od√≠de. V pr√≠pade elektronick√©ho obchodu mo≈æno de facto hovori≈• o strate z√°kazn√≠ka, ktor√Ω si produkt k√∫pi u konkurencie.
 
-Pre predajcov je preto kæ˙ËovÈ z·kaznÌkovi v elektronickom obchode zjednoduöiù prechod k produktom, o ktorÈ by potenci·lne mohol maù z·ujem. Ide teda o personalizovanÈ odpor˙Ëanie produktov z·kaznÌkom. Toto sa zvykne rieöiù rÙznymi odpor˙ËacÌmi algoritmami. Medzi najrozöÌrenejöie prÌstupy k odpor˙Ëaniu patrÌ obsahovÈ a kolaboratÌvne filtrovanie. V posledn˝ch rokoch sa vöak uk·zalo, ûe tento problÈm moûno rieöiù aj s vyuûitÌm hlbok˝ch neurÛnov˝ch sietÌ, ktorÈ v niektor˝ch prÌpadoch dosahuj˙ signifikantne lepöie v˝sledky ako tradiËnÈ prÌstupy k odpor˙Ëaniu.
-
-
-## Existuj˙ce rieöenia
-Autori v pr·ci [[1]](https://arxiv.org/abs/1608.07400) uk·zali, ûe pomocou rekurentnej neurÛnovej siete je moûnÈ dosiahnuù lepöie v˝sledky ako state-of-the-art prÌstupy pri kr·tkodobom odpor˙ËanÌ. PouûitÌm LSTM dok·zali na z·klade sekvencie interakciÌ pouûÌvateæa s poloûkami predikovaù jeho nasleduj˙ce interakcie. MetÛdu overili na d·tov˝ch mnoûin·ch MovieLens 1M a Netflix. Okrem v˝raznÈho zlepöenia v kr·tkodob˝ch predikci·ch sa v prÌpade domÈny MovieLens podarilo dosiahnuù aj zlepöenie v ˙plnosti (angl. recall), ktor˙ moûno interpretovaù ako dlhodob˙ predikciu. Doölo tieû k v˝raznÈmu zv˝öeniu diverzity spr·vne odporuËen˝ch poloûiek (v oboch domÈnach).
+Pre predajcov je preto kƒæ√∫ƒçov√© z√°kazn√≠kovi v elektronickom obchode zjednodu≈°i≈• prechod k produktom, o ktor√© by potenci√°lne mohol ma≈• z√°ujem. Ide teda o personalizovan√© odpor√∫ƒçanie produktov z√°kazn√≠kom. Toto sa zvykne rie≈°i≈• r√¥znymi odpor√∫ƒçac√≠mi algoritmami. Medzi najroz≈°√≠renej≈°ie pr√≠stupy k odpor√∫ƒçaniu patr√≠ obsahov√© a kolaborat√≠vne filtrovanie. V posledn√Ωch rokoch sa v≈°ak uk√°zalo, ≈æe tento probl√©m mo≈æno rie≈°i≈• aj s vyu≈æit√≠m hlbok√Ωch neur√≥nov√Ωch siet√≠, ktor√© v niektor√Ωch pr√≠padoch dosahuj√∫ signifikantne lep≈°ie v√Ωsledky ako tradiƒçn√© pr√≠stupy k odpor√∫ƒçaniu.
 
 
-V pr·ci [[2]](https://dl.acm.org/citation.cfm?id=3052569) autori spojili maticov˙ faktoriz·ciu a hlbok˙ neurÛnov˙ sieù. Ich model pozost·va z dvoch paraleln˝ch vetiev, modelov. V jednom modely pomocou neurÛnovej siete vykon·vaj˙ maticov˙ faktoriz·ciu a druh˝ model je hlbok· neurÛnov· sieù. Kaûd˝ model sa predtrÈnuje samostatne a pri predikcii spoja tieto dva modely vo v˝stupnej vrstve. SpojenÌm t˝chto dvoch modelov a ich samostatn˝m predtrÈnovanÌm dostali pri experimentoch najlepöie v˝sledky. Vstupom do modelu je one hot encoding pouûÌvateæa a poloûky a v˝stupom je pravdepodobnosù, ûe pouûÌvateæ k˙pi dan˙ poloûku. MetÛdu overili na d·tov˝ch mnoûin·ch MovieLens 1M a Pinterest..
+## Existuj√∫ce rie≈°enia
+Autori v pr√°ci [[1]](https://arxiv.org/abs/1608.07400) uk√°zali, ≈æe pomocou rekurentnej neur√≥novej siete je mo≈æn√© dosiahnu≈• lep≈°ie v√Ωsledky ako state-of-the-art pr√≠stupy pri kr√°tkodobom odpor√∫ƒçan√≠. Pou≈æit√≠m LSTM dok√°zali na z√°klade sekvencie interakci√≠ pou≈æ√≠vateƒæa s polo≈ækami predikova≈• jeho nasleduj√∫ce interakcie. Met√≥du overili na d√°tov√Ωch mno≈æin√°ch MovieLens 1M a Netflix. Okrem v√Ωrazn√©ho zlep≈°enia v kr√°tkodob√Ωch predikci√°ch sa v pr√≠pade dom√©ny MovieLens podarilo dosiahnu≈• aj zlep≈°enie v √∫plnosti (angl. recall), ktor√∫ mo≈æno interpretova≈• ako dlhodob√∫ predikciu. Do≈°lo tie≈æ k v√Ωrazn√©mu zv√Ω≈°eniu diverzity spr√°vne odporuƒçen√Ωch polo≈æiek (v oboch dom√©nach).
+
+
+V pr√°ci [[2]](https://dl.acm.org/citation.cfm?id=3052569) autori spojili maticov√∫ faktoriz√°ciu a hlbok√∫ neur√≥nov√∫ sie≈•. Ich model pozost√°va z dvoch paraleln√Ωch vetiev, modelov. V jednom modely pomocou neur√≥novej siete vykon√°vaj√∫ maticov√∫ faktoriz√°ciu a druh√Ω model je hlbok√° neur√≥nov√° sie≈•. Ka≈æd√Ω model sa predtr√©nuje samostatne a pri predikcii spoja tieto dva modely vo v√Ωstupnej vrstve. Spojen√≠m t√Ωchto dvoch modelov a ich samostatn√Ωm predtr√©novan√≠m dostali pri experimentoch najlep≈°ie v√Ωsledky. Vstupom do modelu je one hot encoding pou≈æ√≠vateƒæa a polo≈æky a v√Ωstupom je pravdepodobnos≈•, ≈æe pou≈æ√≠vateƒæ k√∫pi dan√∫ polo≈æku. Met√≥du overili na d√°tov√Ωch mno≈æin√°ch MovieLens 1M a Pinterest..
 
  
-V pr·ci [[3]](https://arxiv.org/abs/1605.09477) pouûÌvaj˙ na odpor˙Ëanie prÌstup pomocou neurÛnovej autoregresie. Tento prÌstup je podobn˝ rekurentnej neurÛnovej sieti. Model na z·klade toho ako pouûÌvateæ ohodnotil poloûky vypoËÌta rank(oËak·vanÈ hodnotenie) vöetk˝ch poloûiek, ktor˝ pouûije na v˝ber poloûiek, ktorÈ sa bud˙ pouûÌvateæovi najviac p·Ëi. Model vyhodnocovali na d·tov˝ch mnoûin·ch Netflix, MovieLens 1M a 10M. Pri experimentoch zistili, ûe hlböie neurÛnovÈ siete dosahuj˙ lepöÌ v˝sledok.
+V pr√°ci [[3]](https://arxiv.org/abs/1605.09477) pou≈æ√≠vaj√∫ na odpor√∫ƒçanie pr√≠stup pomocou neur√≥novej autoregresie. Tento pr√≠stup je podobn√Ω rekurentnej neur√≥novej sieti. Model na z√°klade toho ako pou≈æ√≠vateƒæ ohodnotil polo≈æky vypoƒç√≠ta rank(oƒçak√°van√© hodnotenie) v≈°etk√Ωch polo≈æiek, ktor√Ω pou≈æije na v√Ωber polo≈æiek, ktor√© sa bud√∫ pou≈æ√≠vateƒæovi najviac p√°ƒçi. Model vyhodnocovali na d√°tov√Ωch mno≈æin√°ch Netflix, MovieLens 1M a 10M. Pri experimentoch zistili, ≈æe hlb≈°ie neur√≥nov√© siete dosahuj√∫ lep≈°√≠ v√Ωsledok.
 
-Kombin·ciou dlhodob˝ch a kr·tkodob˝ch preferenciÌ pouûÌvateæa zÌskan˝ch dvomi LSTM neurÛnov˝mi sieùami sa autorom v pr·ci [[4]](https://dl.acm.org/citation.cfm?id=3220014) podarilo prekonaù metÛdu HRNN Init, ktor· bola povaûovan· za state-of-the-art v ˙lohe odpor˙Ëania nasleduj˙cej poloûky. Navrhnut· metÛda BINN pozost·va z dvoch hlavn˝ch komponentov: vnorenie poloûiek (angl. item embedding) a uËenie spr·vania pouûÌvateæa. Prv· Ëasù predstavuje item2vec obohaten˝ o zohæadnenie frekvencie poloûky ako v·hovÈho faktora. Druh˙ Ëasù tvoria dve LSTM siete urËenÈ na zachytenie historicky stabiln˝ch dlhodob˝ch preferenciÌ pouûÌvateæa a kr·tkodobÈho z·meru pouûÌvateæa v r·mci s˙ËasnÈho sedenia. MetÛda bola overen· na dvoch e-commerce d·tov˝ch mnoûin·ch JD a Tianchi.
+Kombin√°ciou dlhodob√Ωch a kr√°tkodob√Ωch preferenci√≠ pou≈æ√≠vateƒæa z√≠skan√Ωch dvomi LSTM neur√≥nov√Ωmi sie≈•ami sa autorom v pr√°ci [[4]](https://dl.acm.org/citation.cfm?id=3220014) podarilo prekona≈• met√≥du HRNN Init, ktor√° bola pova≈æovan√° za state-of-the-art v √∫lohe odpor√∫ƒçania nasleduj√∫cej polo≈æky. Navrhnut√° met√≥da BINN pozost√°va z dvoch hlavn√Ωch komponentov: vnorenie polo≈æiek (angl. item embedding) a uƒçenie spr√°vania pou≈æ√≠vateƒæa. Prv√° ƒças≈• predstavuje item2vec obohaten√Ω o zohƒæadnenie frekvencie polo≈æky ako v√°hov√©ho faktora. Druh√∫ ƒças≈• tvoria dve LSTM siete urƒçen√© na zachytenie historicky stabiln√Ωch dlhodob√Ωch preferenci√≠ pou≈æ√≠vateƒæa a kr√°tkodob√©ho z√°meru pou≈æ√≠vateƒæa v r√°mci s√∫ƒçasn√©ho sedenia. Met√≥da bola overen√° na dvoch e-commerce d√°tov√Ωch mno≈æin√°ch JD a Tianchi.
 
-## D·tovÈ mnoûiny
-Na trÈnovanie a vyhodnotenie modelu budeme pouûÌvaù d·tov˙ mnoûinu, ktor· pozost·va z logov aktivity pouûÌvateæa v elektronickom obchode, teda akÈ poloûky si zobrazil, pridal do koöÌka a ktorÈ z nich nak˙pil.
+## D√°tov√© mno≈æiny
+Na tr√©novanie a vyhodnotenie modelu budeme pou≈æ√≠va≈• d√°tov√∫ mno≈æinu, ktor√° pozost√°va z logov aktivity pou≈æ√≠vateƒæa v elektronickom obchode, teda ak√© polo≈æky si zobrazil, pridal do ko≈°√≠ka a ktor√© z nich nak√∫pil.
 
-Z dostupn˝ch mnoûÌn sme vybrali dve z prostredia elektronickÈho obchodu. Prvou je Retailrocket, ktor· bola zverejnen· na Kaggle a druhou (z·loûnou) je Yoochoose, ktor· bola zverejnen· v r·mci Recsys Challenge 2015. Jej nev˝hodou vöak je, ûe neobsahuje ID pouûÌvateæa ale iba sedenia, Ëo neumoûÚuje sk˙maù dlhodobÈ preferencie pouûÌvateæa.
+Z dostupn√Ωch mno≈æ√≠n sme vybrali dve z prostredia elektronick√©ho obchodu. Prvou je Retailrocket, ktor√° bola zverejnen√° na Kaggle a druhou (z√°lo≈ænou) je Yoochoose, ktor√° bola zverejnen√° v r√°mci Recsys Challenge 2015. Jej nev√Ωhodou v≈°ak je, ≈æe neobsahuje ID pou≈æ√≠vateƒæa ale iba sedenia, ƒço neumo≈æ≈àuje sk√∫ma≈• dlhodob√© preferencie pou≈æ√≠vateƒæa.
 
-### Retailrocket ([link](https://www.kaggle.com/retailrocket/ecommerce-dataset))
-D·tov· mnoûina obsahuje s˙bor s akciami, ktorÈ pouûÌvateæ vykonal. Akcie sa delia na zobrazenie produktu, vloûenie produktu do koöÌka a n·kup produktu. Tabuæka obsahuje Ëas vykonania aktivity, ID pouûÌvateæa, ID produktu a typ akcie. K dispozÌcii je aj s˙bor, ktor˝ obsahuje inform·cie o produktoch - kategÛriu, dostupnosù a anonymizovanÈ atrib˙ty produktu. D·tov· mnoûina obsahuje 2,7 miliÛna akcii, z toho bolo 69 tisÌc pridanÌ do koöÌka a a 22 tisÌc n·kupov.
+### Retailrocket ([link](https://www.kaggle.com/retailrocket/ecommerce-dataset),[anal√Ωza](https://github.com/LubomirKoprla/fiit_project_neural_networks/blob/master/notebooks/analysis-ecommerce.ipynb))
+D√°tov√° mno≈æina obsahuje s√∫bor s akciami, ktor√© pou≈æ√≠vateƒæ vykonal. Akcie sa delia na zobrazenie produktu, vlo≈æenie produktu do ko≈°√≠ka a n√°kup produktu. Tabuƒæka obsahuje ƒças vykonania aktivity, ID pou≈æ√≠vateƒæa, ID produktu a typ akcie. K dispoz√≠cii je aj s√∫bor, ktor√Ω obsahuje inform√°cie o produktoch - kateg√≥riu, dostupnos≈• a anonymizovan√© atrib√∫ty produktu. D√°tov√° mno≈æina obsahuje 2,7 mili√≥na akcii, z toho bolo 69 tis√≠c pridan√≠ do ko≈°√≠ka a a 22 tis√≠c n√°kupov.
 
-### Yoochoose ([link](https://2015.recsyschallenge.com/challenge.html))
-T·to d·tov· mnoûina obsahuje d·ta o kliknutiach a n·kupoch pouûÌvateæov v elektronickom obchode v r·mci jednÈho sedenia. Je rozdelen· do dvoch s˙borov, podæa akcie na kliknutia a n·kupy. Tabuæka s kliknutiami obsahuje ID sedenia, Ëas akcie, ID produktu a kategÛriu produktu. Tabuæka s n·kupmi obsahuje ID sedenia, Ëas akcie, ID produktu, cenu produktu a mnoûstvo nak˙penÈho produktu. D·tov· sada obsahuje 9 miliÛnov sedenÌ, 33 miliÛnov kliknutÌ a 1,1 miliÛna n·kupov.
-
-
-## N·vrh
-
-Nakoæko sa uk·zalo, ûe kombin·ciou dlhodob˝ch a kr·tkodob˝ch preferenciÌ je moûnÈ dosiahnuù zaujÌmavÈ v˝sledky, chceli by sme sa tomuto venovaù aj v naöej pr·ci.
-Moûnou architekt˙rou teda s˙ dve samostatnÈ rekurentnÈ siete (napr. LSTM). Prv· z nich m· na vstupe vöetky historickÈ interakcie pouûÌvateæa s poloûkami a druh· zohæadÚuje len posledn˝ch N akciÌ (bliûöie urËÌme na z·klade anal˝zy d·t a konzult·ciÌ). N·sledne by sme porovnali v˝sledky dosiahnutÈ jednotliv˝mi sieùami ako aj ich vhodnej kombin·cie.
+### Yoochoose ([link](https://2015.recsyschallenge.com/challenge.html),[anal√Ωza](https://github.com/LubomirKoprla/fiit_project_neural_networks/blob/master/notebooks/analysis-yoochoose.ipynb))
+T√°to d√°tov√° mno≈æina obsahuje d√°ta o kliknutiach a n√°kupoch pou≈æ√≠vateƒæov v elektronickom obchode v r√°mci jedn√©ho sedenia. Je rozdelen√° do dvoch s√∫borov, podƒæa akcie na kliknutia a n√°kupy. Tabuƒæka s kliknutiami obsahuje ID sedenia, ƒças akcie, ID produktu a kateg√≥riu produktu. Tabuƒæka s n√°kupmi obsahuje ID sedenia, ƒças akcie, ID produktu, cenu produktu a mno≈æstvo nak√∫pen√©ho produktu. D√°tov√° sada obsahuje 9 mili√≥nov seden√≠, 33 mili√≥nov kliknut√≠ a 1,1 mili√≥na n√°kupov.
 
 
-## N·vrh modelu
+### Z√°ver
+Na z√°klade anal√Ωzy d√°t sme sa rozhodli pou≈æi≈• d√°tov√∫ mno≈æinu Yoochoose. Retailrocket sme vyl√∫ƒçili z d√¥vodu, ≈æe v√§ƒç≈°ina ƒæud√≠ mala iba interakciu s jedn√Ωm produktom. V d√°tovej mno≈æine Yoochoose bol priemern√Ω poƒçet produktov na sedenie 2,87 a obsahovala oveƒæa viac d√°t. Preto bolo mo≈æn√© odfiltrova≈• pou≈æ√≠vateƒæov s n√≠zkym poƒçtom interakci√≠ pri zachovan√≠ dostatoƒçn√©ho mno≈æstva d√°t na tr√©novanie modelu.
 
-![N·vrh modelu](model.png)
+## N√°vrh
+Projekt sme sa rozhodli rie≈°i≈• rekurentnou neur√≥novou sie≈•ou, konkr√©tne LSTM, vzhƒæadom na jej √∫spe≈°nos≈• pri rie≈°en√≠ podobn√©ho probl√©mu v in√Ωch dom√©nach.
+Vstup je teda tvoren√Ω sekvenciami interakci√≠ pou≈æ√≠vateƒæov s polo≈ækami (v≈°etky typy udalost√≠: n√°kupy aj videnia) s fixnou dƒ∫≈ækou s vyu≈æit√≠m post-paddingu. Pred samotnou LSTM vrstvou sa nach√°dza embedding vrstva, ktorej cieƒæom je zachyti≈• ƒçrty jednotliv√Ωch produktov vo forme latentn√Ωch vektorov a tie≈æ poskytn√∫≈• LSTM vrstve inform√°cie o maskovan√≠. Za LSTM vrstvou je umiestnen√° Dense vrstva. Na v√Ωstupe je pre ka≈æd√∫ polo≈æku vypoƒç√≠tan√° pravdepodobnos≈•, ≈æe sa bude nach√°dza≈• v nasleduj√∫cich interakci√°ch dan√©ho pou≈æ√≠vateƒæa.
+
+![N√°vrh modelu](model.png)
+
+
+## Implement√°cia
+
+### Predspracovanie d√°t
+Pri predspracovan√≠ d√°t sme si najprv spravili predv√Ωber produktov a pou≈æ√≠vateƒæov, s ktor√Ωmi chceme pracova≈•. V prvom kroku sme si odfiltrovali produkty, ktor√© maj√∫ menej ako 20 interakci√≠. V ƒèal≈°om kroku sme odfiltrovali pou≈æ√≠vateƒæov, ktor√≠ maj√∫ menej ako 20 a viac ako 50 interakci√≠. Takto vznikla d√°tov√° mno≈æina obsahuj√∫ca 23091 r√¥znych produktov a 35996 pou≈æ√≠vateƒæov (= sekvenci√≠) s priemern√Ωm poƒçtom 27 interakci√≠ na pou≈æ√≠vateƒæa.
+N√°sledne sme interakcie ka≈æd√©ho pou≈æ√≠vateƒæa rozdelili v pomere 80:20 (so zohƒæadnen√≠m ƒçasovej n√°slednosti) na polo≈æky na z√°klade, ktor√Ωch predikujeme a polo≈æky, ktor√© chceme predikova≈•. Tzn. na z√°klade 16-40 historick√Ωch interakci√≠ predikujeme nasleduj√∫cich 4-10 interakci√≠.
+
+
+### Sp√¥sob tr√©novania
+Tr√©novanie prebiehalo v prostred√≠ Google Cloud na VM s 2xCPU, 24GB RAM, 1xTesla K80. Vyu≈æili sme Docker kontajner zalo≈æen√Ω na obraze `tensorflow/tensorflow:2.0.0-gpu-py3` doplnen√Ω o niektor√© ƒèal≈°ie kni≈ænice.
+Aplikovali sme n√°hodn√© prehƒæad√°vanie pre hƒæadanie optim√°lnych hyperparametrov modelu. Tie zah≈ï≈àali: dƒ∫≈æku embeddingov, poƒçet LSTM jednotiek, dropout, r√Ωchlos≈• uƒçenia, veƒækos≈• d√°vky, aktivaƒçn√© funkcie na ka≈ædej vrstve a 3 parametre optimaliz√°tora Adam (beta1, beta2, epsilon). V prvom kroku sa vyberie n√°hodn√Ωch 20% pou≈æ√≠vateƒæov (sekvenci√≠), ktor√≠ tvoria testovaciu mno≈æinu. Zvy≈°n√≠ pou≈æ√≠vatelia sa delia na tr√©novaciu a validaƒçn√∫ mno≈æinu v pomere 80:20.
+
+Maxim√°lny poƒçet epoch bol nastaven√Ω na 250, priƒçom sme vyu≈æili tzv. EarlyStopping s trpezlivos≈•ou 10 epoch pri monitorovan√≠ metriky R@10 na validaƒçnej ƒçasti d√°t. R@k predstavuje mieru pokrytia v top k v√Ωsledkoch. Poƒç√≠ta sa ako:
+> | {relevantn√© produkty} ‚à© {top k produkty} | / | {relevantn√© produkty} |
+A vzhƒæadom na to, ≈æe maxim√°lny poƒçet relevantn√Ωch produktov je tie≈æ 10, teoretick√© maximum tejto metriky je 1 a priamo vyjadruje ako dobre model vie zoradi≈• produkty podƒæa relevantnosti.
+
+Monitorovali sme v≈°ak aj in√© metriky (R@50, R@100, P@1, P@3, P@5, P@10). P@k, teda presnos≈• v top k sa poƒç√≠ta ako:
+>  | {relevantn√© produkty} ‚à© {top k produkty} | / k
+V na≈°om pr√≠pade je minim√°lny poƒçet relevantn√Ωch produktov 4, preto jej teoretick√© maximum dosahuje 1 iba v pr√≠padoch kedy k<=4.
+
+Model bol vyhodnocovan√Ω na testovacej mno≈æine v ka≈ædej konfigur√°cii hyperparametrov len raz, po n√°jden√≠ fin√°lnej epochy (spravidla urƒçenej EarlyStopping-om). Podobne, ukladal sa v≈ædy len najlep≈°√≠ model.
+Vyu≈æili sme tie≈æ integr√°ciu slacku na monitorovanie spr√°vneho chodu VM a tr√©novania.
+
+## V√Ωsledky
+Z pohƒæadu pokrytia (R@10, R@50 a R@100) dosiahol model najlep≈°ie v√Ωsledky na validaƒçnej mno≈æine v epoche 91 pri nasleduj√∫cich hyperparametroch:
+```
+emb_dim: 300
+lstm_units: 40
+lstm_activation: 'tanh'
+lstm_recurrent_activation: 'sigmoid'
+lstm_dropout: 0.2
+lstm_recurrent_dropout: 0.2
+dense_activation: 'softmax'
+batch_size: 128
+learning_rate: 0.001
+adam_beta_1: 0.9
+adam_beta_2: 0.999
+adam_epsilon: 0.00000001
+
+```
+
+| mno≈æina | P@1 | P@3 | P@5 | P@10 | R@10 | R@50 | R@100 |
+| -- | -- | -- | -- | -- | -- | -- | -- |
+| val  | 5.7118% | 5.1678% | 4.7326% | 3.9722% | 7.9502% | 19.299% | 26.947% |
+| test | 4.8750% | 4.6944% | 4.4056% | 3.6306% | 7.2316% | 18.660% | 26.060% |
+
+
+
+Z pohƒæadu presnosti (P@1, P@3, P@5) dosiahol model najlep≈°ie v√Ωsledky na validaƒçnej mno≈æine v epoche 38 pri nasleduj√∫cich hyperparametroch:
+```
+emb_dim: 250
+lstm_units: 175
+lstm_activation: 'sigmoid'
+lstm_recurrent_activation: 'linear'
+lstm_dropout: 0.3
+lstm_recurrent_dropout: 0.1
+dense_activation: 'tanh'
+batch_size: 256
+learning_rate: 0.0001
+adam_beta_1: 0.975
+adam_beta_2: 0.899
+adam_epsilon: 0.000000001
+
+```
+
+| mno≈æina | P@1 | P@3 | P@5 | P@10 | R@10 | R@50 | R@100 |
+| -- | -- | -- | -- | -- | -- | -- | -- |
+| val  | 6.5625% | 5.8738% | 5.0208% | 3.7344% | 7.4802% | 14.494% | 18.455% |
+| test | 6.5139% | 5.7361% | 4.8972% | 3.7292% | 7.4548% | 14.638% | 18.708% |
 
 ## Zdroje
 
@@ -47,4 +116,3 @@ Moûnou architekt˙rou teda s˙ dve samostatnÈ rekurentnÈ siete (napr. LSTM). Prv· 
 [3] ZHENG, Yin, et al. A neural autoregressive approach to collaborative filtering. arXiv preprint arXiv:1605.09477, 2016.
 
 [4] LI, Zhi, et al. Learning from history and present: Next-item recommendation via discriminatively exploiting user behaviors. In: Proceedings of the 24th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining. ACM, 2018. p. 1734-1743.
-
