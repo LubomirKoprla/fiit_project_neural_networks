@@ -50,11 +50,15 @@ Trénovanie prebiehalo v prostredí Google Cloud na VM s 2xCPU, 24GB RAM, 1xTesl
 Aplikovali sme náhodné prehľadávanie pre hľadanie optimálnych hyperparametrov modelu. Tie zahŕňali: dĺžku embeddingov, počet LSTM jednotiek, dropout, rýchlosť učenia, veľkosť dávky, aktivačné funkcie na každej vrstve a 3 parametre optimalizátora Adam (beta1, beta2, epsilon). V prvom kroku sa vyberie náhodných 20% používateľov (sekvencií), ktorí tvoria testovaciu množinu. Zvyšní používatelia sa delia na trénovaciu a validačnú množinu v pomere 80:20.
 
 Maximálny počet epoch bol nastavený na 250, pričom sme využili tzv. EarlyStopping s trpezlivosťou 10 epoch pri monitorovaní metriky R@10 na validačnej časti dát. R@k predstavuje mieru pokrytia v top k výsledkoch. Počíta sa ako:
+
 > | {relevantné produkty} ∩ {top k produkty} | / | {relevantné produkty} |
+
 A vzhľadom na to, že maximálny počet relevantných produktov je tiež 10, teoretické maximum tejto metriky je 1 a priamo vyjadruje ako dobre model vie zoradiť produkty podľa relevantnosti.
 
 Monitorovali sme však aj iné metriky (R@50, R@100, P@1, P@3, P@5, P@10). P@k, teda presnosť v top k sa počíta ako:
+
 >  | {relevantné produkty} ∩ {top k produkty} | / k
+
 V našom prípade je minimálny počet relevantných produktov 4, preto jej teoretické maximum dosahuje 1 iba v prípadoch kedy k<=4.
 
 Model bol vyhodnocovaný na testovacej množine v každej konfigurácii hyperparametrov len raz, po nájdení finálnej epochy (spravidla určenej EarlyStopping-om). Podobne, ukladal sa vždy len najlepší model.
