@@ -17,7 +17,7 @@ V práci [[3]](https://arxiv.org/abs/1605.09477) používajú na odporúčanie p
 Kombináciou dlhodobých a krátkodobých preferencií používateľa získaných dvomi LSTM neurónovými sieťami sa autorom v práci [[4]](https://dl.acm.org/citation.cfm?id=3220014) podarilo prekonať metódu HRNN Init, ktorá bola považovaná za state-of-the-art v úlohe odporúčania nasledujúcej položky. Navrhnutá metóda BINN pozostáva z dvoch hlavných komponentov: vnorenie položiek (angl. item embedding) a učenie správania používateľa. Prvá časť predstavuje item2vec obohatený o zohľadnenie frekvencie položky ako váhového faktora. Druhú časť tvoria dve LSTM siete určené na zachytenie historicky stabilných dlhodobých preferencií používateľa a krátkodobého zámeru používateľa v rámci súčasného sedenia. Metóda bola overená na dvoch e-commerce dátových množinách JD a Tianchi.
 
 ## Dátové množiny
-Na trénovanie a vyhodnotenie modelu budeme používať dátovú množinu, ktorá pozostáva z logov aktivity používateľa v elektronickom obchode, teda aké položky si zobrazil, pridal do košíka a ktoré z nich nakúpil.
+Na trénovanie a vyhodnotenie modelu používame dátovú množinu, ktorá pozostáva z logov aktivity používateľa v elektronickom obchode, teda aké položky si zobrazil, pridal do košíka a ktoré z nich nakúpil.
 
 Z dostupných množín sme vybrali dve z prostredia elektronického obchodu. Prvou je Retailrocket, ktorá bola zverejnená na Kaggle a druhou (záložnou) je Yoochoose, ktorá bola zverejnená v rámci Recsys Challenge 2015. Jej nevýhodou však je, že neobsahuje ID používateľa ale iba sedenia, čo neumožňuje skúmať dlhodobé preferencie používateľa.
 
@@ -28,12 +28,12 @@ Dátová množina obsahuje súbor s akciami, ktoré používateľ vykonal. Akcie
 Táto dátová množina obsahuje dáta o kliknutiach a nákupoch používateľov v elektronickom obchode v rámci jedného sedenia. Je rozdelená do dvoch súborov, podľa akcie na kliknutia a nákupy. Tabuľka s kliknutiami obsahuje ID sedenia, čas akcie, ID produktu a kategóriu produktu. Tabuľka s nákupmi obsahuje ID sedenia, čas akcie, ID produktu, cenu produktu a množstvo nakúpeného produktu. Dátová sada obsahuje 9 miliónov sedení, 33 miliónov kliknutí a 1,1 milióna nákupov.
 
 
-### Záver
+### Zhrnutie
 Na základe analýzy dát sme sa rozhodli použiť dátovú množinu Yoochoose. Retailrocket sme vylúčili z dôvodu, že väčšina ľudí mala iba interakciu s jedným produktom. V dátovej množine Yoochoose bol priemerný počet produktov na sedenie 2,87 a obsahovala oveľa viac dát. Preto bolo možné odfiltrovať používateľov s nízkym počtom interakcií pri zachovaní dostatočného množstva dát na trénovanie modelu.
 
 ## Návrh
 Projekt sme sa rozhodli riešiť rekurentnou neurónovou sieťou, konkrétne LSTM, vzhľadom na jej úspešnosť pri riešení podobného problému v iných doménach.
-Vstup je teda tvorený sekvenciami interakcií používateľov s položkami (všetky typy udalostí: nákupy aj videnia) s fixnou dĺžkou s využitím post-paddingu. Pred samotnou LSTM vrstvou sa nachádza embedding vrstva, ktorej cieľom je zachytiť črty jednotlivých produktov vo forme latentných vektorov a tiež poskytnúť LSTM vrstve informácie o maskovaní. Za LSTM vrstvou je umiestnená Dense vrstva. Na výstupe je pre každú položku vypočítaná pravdepodobnosť, že sa bude nachádzať v nasledujúcich interakciách daného používateľa.
+Vstup je teda tvorený sekvenciami interakcií používateľov s položkami (všetky typy udalostí: nákupy aj videnia) s fixnou dĺžkou s využitím post-paddingu. Pred samotnou LSTM vrstvou sa nachádza embedding vrstva, ktorej cieľom je zachytiť črty jednotlivých produktov vo forme latentných vektorov a tiež poskytnúť LSTM vrstve informácie o maskovaní. Za LSTM vrstvou je umiestnená Dense vrstva. Na výstupe je pre každú položku vypočítaná pravdepodobnosť, že sa bude nachádzať v nasledujúcich interakciách daného používateľa. Vhodnou stratovou funkciou na riešenie tohto problému je binárna krížová entropia a problém možno do istej miery interpretovať ako tzv. multilabel klasifikáciu, kde za pozitívne označíme najpravdepodobnejších N tried.
 
 ![Návrh modelu](model.png)
 
@@ -41,7 +41,7 @@ Vstup je teda tvorený sekvenciami interakcií používateľov s položkami (vš
 ## Implementácia
 
 ### Predspracovanie dát
-Pri predspracovaní dát sme si najprv spravili predvýber produktov a používateľov, s ktorými chceme pracovať. V prvom kroku sme si odfiltrovali produkty, ktoré majú menej ako 20 interakcií. V ďalšom kroku sme odfiltrovali používateľov, ktorí majú menej ako 20 a viac ako 50 interakcií. Takto vznikla dátová množina obsahujúca 23091 rôznych produktov a 35996 používateľov (= sekvencií) s priemerným počtom 27 interakcií na používateľa.
+Pri predspracovaní dát sme si najprv spravili predvýber produktov a používateľov, s ktorými chceme pracovať. V prvom kroku sme si odfiltrovali produkty, ktoré majú menej ako 20 interakcií. V ďalšom kroku sme odfiltrovali používateľov, ktorí majú menej ako 20 a viac ako 50 interakcií. Takto vznikla dátová množina obsahujúca 23091 rôznych produktov a 35996 používateľov (= sekvencií) s priemerným počtom 27 interakcií na používateľa (= priemerná dĺžka sekvencie).
 Následne sme interakcie každého používateľa rozdelili v pomere 80:20 (so zohľadnením časovej následnosti) na položky na základe, ktorých predikujeme a položky, ktoré chceme predikovať. Tzn. na základe 16-40 historických interakcií predikujeme nasledujúcich 4-10 interakcií.
 
 
